@@ -6,6 +6,10 @@ const asyncHandler = (reqHandler) => {
 
 export { asyncHandler };
 
+
+// comments =  what are higher order function in js . promise is is higher ordefr or not ?
+
+// const asyncHandler = () => {}
 // const asyncHandler = (fn)=> async () => {}
 // const asyncHandler = (func) => {()=>{}}
 

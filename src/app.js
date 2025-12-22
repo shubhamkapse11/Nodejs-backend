@@ -15,7 +15,7 @@ app.use(express.json({
 }))
 
 app.use(express.urlencoded({extented:true , limit:"16kb"}))
-app.use(express.static("public"));
+app.use(express.static("public"));  // This line tells Express to serve static files from the public folder.
 app.use(cookieParser())
 
 export { app }
