@@ -1,12 +1,11 @@
 // require('dotenv').config({path : './env'})
 // import mongoose from "mongoose";
 // import {DB_NAME} from "./constants";
+
 import dotenv from "dotenv";
 import connectDB from "./db/db.js";
-import express  from 'express';
-// dotenv.config({ path: "./env" });
+import { app } from "./app.js";
 dotenv.config();   // will automatically load ".env"
-const app = express();
 
 connectDB().then(()=>{
     app.on("error" , (err)=> {
