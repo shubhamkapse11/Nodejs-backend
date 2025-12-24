@@ -6,14 +6,14 @@ import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
-    },
+    // name: {
+    //   type: String,
+    //   // required: true,
+    //   unique: true,
+    //   lowercase: true,
+    //   trim: true,
+    //   index: true,
+    // },
     email: {
       type: String,
       required: true,

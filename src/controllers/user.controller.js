@@ -14,19 +14,19 @@ const resgisterUser = asyncHandler(async (req , res )=> {
     // check for user creation 
     // return response
 
-    const { fullName , email , username ,password    } = req.body
+    const { fullname , email , username ,password    } = req.body
 
     // if(fullName ==""){
     //     ApiError(400 ,"fullname is required" )
     // }
 
-       if([ fullName , email , username ,password ].some((feild)=>
+       if([ fullname , email , username ,password ].some((feild)=>
         feild?.trim() === "" )){
         ApiError(400 ,"all feild are required" )
     }
-    console.log("emai=l", email ,"password=", password, "done")
+   //  console.log("emai=l", email ,"password=", password, "done")
 
-   const  existedUser = User.findOne({
+   const  existedUser = await User.findOne({
         $or:[{username},{email}]
     })
 
@@ -35,29 +35,34 @@ const resgisterUser = asyncHandler(async (req , res )=> {
     }
 
       const avatarLocalPath =  req.files?.avatar[0]?.path;
-      const coverImgLocalPath =  req.files?.coverImage[0]?.path;
+      // const coverImgLocalPath =  req.files?.coverImage[0]?.path;
+      let coverImgLocalPath ; 
+       
+      if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length >0 ){
+         coverImgLocalPath = req.files.coverImage[0].path
+      }
 
       if(!avatarLocalPath){
         throw new  ApiError(400 , "avatar file is required");
       }
-       if(!coverImgLocalPath){
-        throw new  ApiError(400 , "coverimg file is required");
-      }
+      //  if(!coverImgLocalPath){
+      //   throw new  ApiError(400 , "coverimg file is required");
+      // }
 
       const avatarImg =  await uploadOnCloudinary(avatarLocalPath)
-      const coverImg =  await uploadOnCloudinary(avatarLocalPath)
+      const coverImg =  await uploadOnCloudinary(coverImgLocalPath)
 
       if(!avatarImg){
         throw new ApiError(400 , "avatarImg is required")
       }
 
      const user = await User.create({
-        fullName,
-        avatar : avatarImg.url,
-        coverImage :coverImg.url || "" ,
+        fullname,
+        avatar : avatarImg,
+        coverImage :coverImg || "" ,
         email, 
         password,
-        username:username.toLowercase()
+        username:username.toLowerCase()
 
       })
 
